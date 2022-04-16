@@ -12,8 +12,10 @@ steps:
   - task: FileTransform@1
     inputs:
       folderPath: "$(System.DefaultWorkingDirectory)/publish"
-      targetFiles: "ocelot.json"
       fileType: json
+      targetFiles: |
+        ocelot.json
+        appsettings.json
 
   - task: AzureRmWebAppDeployment@4
     inputs:

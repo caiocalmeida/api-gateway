@@ -13,6 +13,22 @@ builder.Services.AddOcelot();
 builder.Services.AddSwaggerForOcelot(builder.Configuration);
 builder.Services.AddControllers();
 
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddHttpClient("dotnet", (IServiceProvider sp, HttpClient c) =>
+{
+    HttpContext context = sp.GetRequiredService<IHttpContextAccessor>().HttpContext!;
+
+    if (context!.Request.Headers.ContainsKey("X-API-KEY"))
+    {
+        c.DefaultRequestHeaders.Add("X-API-KEY", context!.Request.Headers["X-API-KEY"].ToString());
+    }
+
+    c.BaseAddress = new Uri(builder.Configuration["DotnetGraphQLUrl"]);
+});
+builder.Services
+    .AddGraphQLServer()
+    .AddRemoteSchema("dotnet");
+
 
 var app = builder.Build();
 
@@ -20,6 +36,9 @@ app.UseHttpsRedirection();
 
 app.UseDefaultFiles();
 app.UseStaticFiles();
+
+app.UseRouting();
+app.UseEndpoints(endpoints => endpoints.MapGraphQL());
 
 app.UseSwaggerForOcelotUI(opt =>
 {
