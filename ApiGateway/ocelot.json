@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/ocelot.json",
   "Routes": [
     {
-      "DownstreamPathTemplate": "/{any}",
+      "DownstreamPathTemplate": "/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -10,8 +10,21 @@
           "Port": 443
         }
       ],
-      "UpstreamPathTemplate": "/dotnet/{any}",
-      "UpstreamHttpMethod": [ "Get", "Post" ]
+      "UpstreamPathTemplate": "/dotnet/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "SwaggerKey": "dotnet"
+    }
+  ],
+  "SwaggerEndPoints": [
+    {
+      "Key": "dotnet",
+      "Config": [
+        {
+          "Name": ".NET API",
+          "Version": "v1",
+          "Url": "DOTNET_SWAGGER_URL"
+        }
+      ]
     }
   ],
   "GlobalConfiguration": {
