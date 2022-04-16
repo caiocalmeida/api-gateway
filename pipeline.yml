@@ -1,0 +1,24 @@
+pool:
+  vmImage: "ubuntu-latest"
+
+trigger:
+  tags:
+    include:
+      - v*
+
+steps:
+  - script: dotnet publish -c Release -o $(System.DefaultWorkingDirectory)/publish
+
+  - task: FileTransform@1
+    inputs:
+      folderPath: "$(System.DefaultWorkingDirectory)/publish"
+      targetFiles: "ocelot.json"
+      fileType: json
+
+  - task: AzureRmWebAppDeployment@4
+    inputs:
+      ConnectionType: AzureRM
+      appType: webAppLinux
+      azureSubscription: $(AzSubscription)
+      WebAppName: $(AppName)
+      packageForLinux: "$(System.DefaultWorkingDirectory)/publish"

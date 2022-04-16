@@ -1,0 +1,20 @@
+﻿{
+  "$schema": "https://json.schemastore.org/ocelot.json",
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/{any}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "DOTNET_URL",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/dotnet/{any}",
+      "UpstreamHttpMethod": [ "Get", "Post" ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "BASE_URL"
+  }
+}
