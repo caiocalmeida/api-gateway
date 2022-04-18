@@ -43,7 +43,7 @@ app.UseEndpoints(endpoints => endpoints.MapGraphQL());
 app.UseSwaggerForOcelotUI(opt =>
 {
     opt.PathToSwaggerGenerator = "/swagger/docs";
-    opt.DocumentTitle = "Caio's API Gateway";
+    opt.DocumentTitle = "Caio's API Gateway Swagger";
     opt.ReConfigureUpstreamSwaggerJson = (_, json) =>
     {
         var swagger = JObject.Parse(json);

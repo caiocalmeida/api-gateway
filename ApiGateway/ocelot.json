@@ -12,7 +12,13 @@
       ],
       "UpstreamPathTemplate": "/dotnet/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post" ],
-      "SwaggerKey": "dotnet"
+      "SwaggerKey": "dotnet",
+      "RateLimitOptions": {
+        "EnableRateLimiting": true,
+        "Period": "120s",
+        "PeriodTimespan": 120,
+        "Limit": 10
+      }
     }
   ],
   "SwaggerEndPoints": [
@@ -28,6 +34,10 @@
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "BASE_URL"
+    "BaseUrl": "BASE_URL",
+    "RateLimitOptions": {
+      "QuotaExceededMessage": "Request limit exceeded. Service will resume in under 2 minutes.",
+      "ClientIdHeader": "CLIENT_ID_HEADER"
+    }
   }
 }
